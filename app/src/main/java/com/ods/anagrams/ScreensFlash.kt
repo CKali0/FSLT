@@ -291,8 +291,8 @@ fun FlashStudyScreen(vm: AppViewModel, deckId: Long) {
             fontSize = 14.sp
         )
         Spacer(Modifier.height(12.dp))
-        RackRow(s.shown, onClick = { vm.studyShuffle() })
-        Spacer(Modifier.height(8.dp))
+        RackRow(s.shown)
+        RackControls(onShuffle = { vm.studyShuffle() }, onSort = { vm.studySort() })
 
         if (!revealed) {
             Column(

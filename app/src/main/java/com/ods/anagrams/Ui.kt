@@ -344,6 +344,17 @@ fun RackRow(
 }
 
 @Composable
+fun RackControls(onShuffle: () -> Unit, onSort: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        TextButton(onClick = onShuffle) { Text("Shuffle", color = Pal.Accent) }
+        TextButton(onClick = onSort) { Text("A–Z", color = Pal.Accent) }
+    }
+}
+
+@Composable
 fun WordRow(word: String, found: Boolean) {
     Box(
         Modifier

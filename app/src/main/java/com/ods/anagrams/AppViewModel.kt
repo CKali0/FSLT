@@ -82,7 +82,7 @@ class RackSession(
     val allWords: Set<String> = solutions.values.flatten().toHashSet()
     val total: Int = allWords.size
     var found by mutableStateOf<Set<String>>(emptySet())
-    var shown by mutableStateOf(rack)
+    var shown by mutableStateOf(Letters.alphagram(rack))
     var message by mutableStateOf("")
 }
 
@@ -233,6 +233,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         beginRack(s.rack, s.settings)
     }
 
+    fun rackSort() {
+        val s = rackSession ?: return
+        s.shown = Letters.alphagram(s.shown)
+    }
+
     fun rackShuffle() {
         val s = rackSession ?: return
         s.shown = f.shuffle(s.shown)
@@ -264,7 +269,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun beginBingo(racks: List<String>, st: BingoSettings) {
         val answers = racks.map { d.wordsFor(Letters.alphagram(it)) }
-        bingoSession = BingoSession(racks, st, answers, SystemClock.elapsedRealtime() + st.seconds * 1000L)
+        bingoSession = BingoSession(racks.map { Letters.alphagram(it) }, st, answers, SystemClock.elapsedRealtime() + st.seconds * 1000L)
         screen = Screen.BingoGame
     }
 
@@ -417,6 +422,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private fun makeStudy(dk: Deck): StudySession {
         val card = dk.nextCard()
         return StudySession(dk.id, card, if (card == null) emptyList() else d.wordsFor(card.rack))
+    }
+
+    fun studySort() {
+        val s = study ?: return
+        s.shown = Letters.alphagram(s.shown)
     }
 
     fun studyShuffle() {

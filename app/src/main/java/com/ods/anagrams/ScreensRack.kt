@@ -85,15 +85,8 @@ fun RackGameScreen(vm: AppViewModel) {
             )
         }
         Spacer(Modifier.height(14.dp))
-        RackRow(s.shown, onClick = { vm.rackShuffle() })
-        Text(
-            "tap the rack to shuffle",
-            color = Pal.Muted,
-            fontSize = 12.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp)
-        )
+        RackRow(s.shown)
+        RackControls(onShuffle = { vm.rackShuffle() }, onSort = { vm.rackSort() })
         LazyColumn(Modifier.weight(1f)) {
             for ((len, words) in s.solutions) {
                 val mine = words.filter { found.contains(it) }
